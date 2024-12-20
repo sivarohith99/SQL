@@ -256,4 +256,90 @@ Constraints can also be added or dropped from existing tables using `ALTER TABLE
 
 ---
 
-Constraints are crucial for maintaining **data integrity** in relational databases. Let me know if you'd like more details on any specific constraint!
+Constraints are crucial for maintaining **data integrity** in relational databases. 
+
+**Data Manipulation Language (DML)** in SQL is used to perform operations on the data stored in database tables. It allows users to retrieve, insert, update, and delete data, focusing on the **manipulation of data**, not the structure of the database.
+
+---
+
+### Key DML Commands
+
+#### 1. **SELECT**
+   - Retrieves data from one or more tables or views.
+   - **Example**:
+     ```sql
+     SELECT * FROM Employees;
+     ```
+   - **Example with conditions**:
+     ```sql
+     SELECT Name, Salary 
+     FROM Employees 
+     WHERE Department = 'IT';
+     ```
+
+#### 2. **INSERT**
+   - Adds new records (rows) to a table.
+   - **Example**:
+     ```sql
+     INSERT INTO Employees (EmployeeID, Name, Age, Department)
+     VALUES (1, 'John Doe', 30, 'IT');
+     ```
+   - Insert data into specific columns:
+     ```sql
+     INSERT INTO Employees (Name, Department)
+     VALUES ('Jane Smith', 'HR');
+     ```
+
+#### 3. **UPDATE**
+   - Modifies existing records in a table.
+   - **Example**:
+     ```sql
+     UPDATE Employees
+     SET Salary = 75000
+     WHERE EmployeeID = 1;
+     ```
+   - Update multiple columns:
+     ```sql
+     UPDATE Employees
+     SET Age = 31, Department = 'Finance'
+     WHERE EmployeeID = 1;
+     ```
+
+#### 4. **DELETE**
+   - Removes records from a table.
+   - **Example**:
+     ```sql
+     DELETE FROM Employees
+     WHERE EmployeeID = 1;
+     ```
+   - Remove all records (without deleting the table):
+     ```sql
+     DELETE FROM Employees;
+     ```
+
+---
+
+### Characteristics of DML
+1. **Data-Focused**: DML commands work with the data inside tables, not the table structure.
+2. **Transactional**: DML commands can be rolled back or committed. They are part of a database transaction.
+   - **ROLLBACK**: Revert changes made by DML commands.
+   - **COMMIT**: Save changes made by DML commands.
+   ```sql
+   BEGIN TRANSACTION;
+   INSERT INTO Employees (Name, Department) VALUES ('Alice', 'HR');
+   ROLLBACK; -- Changes reverted
+   COMMIT;   -- Save changes to the database
+   ```
+
+---
+
+### DML vs. DDL
+| **Feature**         | **DML**                                    | **DDL**                        |
+|----------------------|--------------------------------------------|--------------------------------|
+| **Focus**           | Manipulates data in the database           | Defines/modifies database structure |
+| **Commands**        | `SELECT`, `INSERT`, `UPDATE`, `DELETE`     | `CREATE`, `ALTER`, `DROP`, `TRUNCATE` |
+| **Transactional**   | Yes (can be rolled back or committed)      | No (auto-committed changes)   |
+
+---
+
+DML is essential for interacting with and managing the data in databases. Let me know if you want more examples or details!
