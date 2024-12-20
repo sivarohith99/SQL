@@ -144,4 +144,116 @@ CREATE TABLE Employees (
 );
 ```
 
-Each data type serves a specific purpose, ensuring data is stored efficiently and operations are performed correctly. Let me know if you'd like more details or examples!
+Each data type serves a specific purpose, ensuring data is stored efficiently and operations are performed correctly. 
+
+**Constraints** in SQL are rules enforced on data in tables to ensure data integrity, accuracy, and reliability. They define conditions that data in a database must satisfy.
+
+---
+
+### Types of SQL Constraints
+
+#### 1. **NOT NULL**
+   - Ensures that a column cannot have a `NULL` value.
+   - **Example**:
+     ```sql
+     CREATE TABLE Employees (
+         EmployeeID INT NOT NULL,
+         Name VARCHAR(50) NOT NULL
+     );
+     ```
+
+#### 2. **UNIQUE**
+   - Ensures that all values in a column (or a combination of columns) are unique.
+   - **Example**:
+     ```sql
+     CREATE TABLE Employees (
+         Email VARCHAR(100) UNIQUE
+     );
+     ```
+   - **Note**: Multiple `UNIQUE` constraints can be applied in a table.
+
+#### 3. **PRIMARY KEY**
+   - Combines the `NOT NULL` and `UNIQUE` constraints. It uniquely identifies each row in a table.
+   - A table can have only one `PRIMARY KEY`.
+   - **Example**:
+     ```sql
+     CREATE TABLE Employees (
+         EmployeeID INT PRIMARY KEY,
+         Name VARCHAR(50)
+     );
+     ```
+
+#### 4. **FOREIGN KEY**
+   - Establishes a relationship between two tables by linking a column (or a set of columns) in one table to the `PRIMARY KEY` in another.
+   - **Example**:
+     ```sql
+     CREATE TABLE Departments (
+         DepartmentID INT PRIMARY KEY,
+         DepartmentName VARCHAR(50)
+     );
+
+     CREATE TABLE Employees (
+         EmployeeID INT PRIMARY KEY,
+         DepartmentID INT,
+         FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+     );
+     ```
+
+#### 5. **CHECK**
+   - Ensures that all values in a column satisfy a specific condition.
+   - **Example**:
+     ```sql
+     CREATE TABLE Employees (
+         EmployeeID INT PRIMARY KEY,
+         Age INT CHECK (Age >= 18),
+         Salary DECIMAL(10, 2) CHECK (Salary > 0)
+     );
+     ```
+
+#### 6. **DEFAULT**
+   - Provides a default value for a column when no value is specified.
+   - **Example**:
+     ```sql
+     CREATE TABLE Employees (
+         EmployeeID INT PRIMARY KEY,
+         IsActive BOOLEAN DEFAULT TRUE
+     );
+     ```
+
+#### 7. **INDEX (Constraint-Like Behavior)**
+   - Creates an index to enhance query performance on columns. It is not technically a constraint but supports unique constraints.
+   - **Example**:
+     ```sql
+     CREATE UNIQUE INDEX idx_email ON Employees(Email);
+     ```
+
+---
+
+### Combining Constraints
+Multiple constraints can be applied to a single column, except for `PRIMARY KEY` and `UNIQUE`, which cannot overlap directly.
+```sql
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Age INT CHECK (Age > 18),
+    IsActive BOOLEAN DEFAULT TRUE
+);
+```
+
+---
+
+### Modifying Constraints
+Constraints can also be added or dropped from existing tables using `ALTER TABLE`:
+- **Add a Constraint**:
+  ```sql
+  ALTER TABLE Employees ADD CONSTRAINT chk_age CHECK (Age >= 18);
+  ```
+- **Drop a Constraint**:
+  ```sql
+  ALTER TABLE Employees DROP CONSTRAINT chk_age;
+  ```
+
+---
+
+Constraints are crucial for maintaining **data integrity** in relational databases. Let me know if you'd like more details on any specific constraint!
